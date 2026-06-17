@@ -25,15 +25,6 @@ export interface Service {
   steps?: string[];
 }
 
-export interface Testimonial {
-  id: string;
-  name: string;
-  rating: number;
-  text: string;
-  location: string;
-  avatarUrl?: string;
-}
-
 export interface FAQ {
   id: string;
   question: string;
@@ -45,14 +36,4 @@ export interface WaterAssessmentData {
   waterSource: 'municipal' | 'borewell' | 'tanker' | '';
   familySize: '1-2' | '3-5' | '6+' | '';
   location: string;
-}
-
-export interface LeadFormData {
-  name: string;
-  phone: string;
-  location: string;
-  productInterest: string;
-  message?: string;
-  waterSource?: string;
-  familySize?: string;
 }

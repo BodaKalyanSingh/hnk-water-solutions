@@ -1,111 +1,87 @@
 import * as React from "react";
-import { Phone, Calendar } from "lucide-react";
+import { Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BUSINESS_INFO, WHATSAPP_MESSAGES } from "../../lib/constants";
-import { useLeadStore } from "../../store/leadStore";
-import whatsappLogo from "../../assets/whatsapp_log.png";
+import { getWhatsAppLink } from "../../lib/whatsapp";
+import { useUIStore } from "../../store/uiStore";
+import { WhatsAppIcon } from "../ui/WhatsAppIcon";
 
 export function FloatingActions() {
   const [isVisible, setIsVisible] = React.useState(false);
-  const { openLeadModal } = useLeadStore();
+  const mobileMenuOpen = useUIStore((s) => s.mobileMenuOpen);
 
   React.useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
+    const handleScroll = () => setIsVisible(window.scrollY > 400);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const whatsappLink = `https://wa.me/${BUSINESS_INFO.whatsappRaw}?text=${encodeURIComponent(
-    WHATSAPP_MESSAGES.default
-  )}`;
+  const whatsappLink = getWhatsAppLink(WHATSAPP_MESSAGES.default);
+  const telLink = `tel:${BUSINESS_INFO.phoneRaw}`;
 
   return (
     <>
-      {/* Desktop Floating Action Stack */}
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="hidden md:flex fixed bottom-6 right-6 z-45 flex-col space-y-4 items-end"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.2 }}
+            className="hidden md:flex fixed bottom-4 right-4 z-50 items-center gap-2"
           >
-            {/* Book Demo Button (Orange) */}
-            <button
-              onClick={() => openLeadModal("Book Free Demo", "Floating Button")}
-              className="group flex items-center space-x-2 bg-brand-cta hover:bg-brand-cta-hover text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-            >
-              <span className="text-xs font-bold uppercase tracking-wider max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap block">
-                Book Free Demo
-              </span>
-              <Calendar className="h-5 w-5" />
-            </button>
-
-            {/* Call Now Button (Blue) */}
             <a
-              href={`tel:${BUSINESS_INFO.phoneRaw}`}
-              className="group flex items-center space-x-2 bg-brand-primary hover:bg-brand-primary/95 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              href={telLink}
+              aria-label={`Call ${BUSINESS_INFO.phone}`}
+              className="inline-flex h-9 items-center gap-1.5 rounded-full bg-brand-primary px-3 text-xs font-medium text-white shadow-sm hover:bg-brand-primary/90"
             >
-              <span className="text-xs font-bold uppercase tracking-wider max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap block">
-                Call Now
-              </span>
-              <Phone className="h-5 w-5" />
+              <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+              Call
             </a>
-
-            {/* WhatsApp Button (Clean transparent background with pulse ring) */}
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
+              aria-label="Chat on WhatsApp"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full bg-[#25D366] px-3 text-xs font-medium text-white shadow-sm hover:bg-[#1da851]"
             >
-              {/* WhatsApp Pulse Ring */}
-              <span className="absolute inset-1 rounded-full bg-[#25D366]/25 animate-ping pointer-events-none" />
-              <img
-                src={whatsappLogo}
-                className="h-14 w-14 object-contain drop-shadow-md relative z-10"
-                alt="WhatsApp Us"
-              />
+              <WhatsAppIcon size={16} />
+              WhatsApp
             </a>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Mobile Sticky Footer Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-brandBorder shadow-[0_-8px_30px_rgba(0,0,0,0.08)] px-4 py-2 flex items-center justify-around gap-2 pb-safe">
-        {/* Mobile WhatsApp Action - White background to contrast the green logo */}
-        <a
-          href={whatsappLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 flex flex-col items-center justify-center py-1.5 bg-white border border-brandBorder text-text-primary rounded-lg text-[10px] font-bold uppercase tracking-wider space-y-0.5"
+      {!mobileMenuOpen && (
+        <div
+          className="md:hidden fixed bottom-0 inset-x-0 z-50 flex h-9 items-center justify-center gap-5 border-t border-slate-200 bg-white text-xs"
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+          role="navigation"
+          aria-label="Quick contact"
         >
-          <img src={whatsappLogo} className="h-7 w-7 object-contain" alt="WhatsApp" />
-          <span>WhatsApp</span>
-        </a>
-        <a
-          href={`tel:${BUSINESS_INFO.phoneRaw}`}
-          className="flex-1 flex flex-col items-center justify-center py-2.5 bg-brand-primary text-white rounded-lg text-[10px] font-bold uppercase tracking-wider space-y-1"
-        >
-          <Phone className="h-5 w-5 fill-white" />
-          <span>Call Now</span>
-        </a>
-        <button
-          onClick={() => openLeadModal("Book Free Demo", "Mobile Sticky Action Bar")}
-          className="flex-1 flex flex-col items-center justify-center py-2.5 bg-brand-cta text-white rounded-lg text-[10px] font-bold uppercase tracking-wider space-y-1 cursor-pointer"
-        >
-          <Calendar className="h-5 w-5" />
-          <span>Book Demo</span>
-        </button>
-      </div>
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="inline-flex items-center gap-1 font-medium text-[#128C7E] active:opacity-70"
+          >
+            <WhatsAppIcon size={16} />
+            WhatsApp
+          </a>
+          <span className="text-slate-300 select-none" aria-hidden="true">
+            |
+          </span>
+          <a
+            href={telLink}
+            aria-label="Call now"
+            className="inline-flex items-center gap-1 font-medium text-brand-primary active:opacity-70"
+          >
+            <Phone className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
+            Call Now
+          </a>
+        </div>
+      )}
     </>
   );
 }

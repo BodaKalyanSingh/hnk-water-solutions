@@ -4,14 +4,14 @@ import { SEOHead } from "../components/layout/SEOHead";
 import { products } from "../data/products";
 import { categories } from "../data/categories";
 import { Card } from "../components/ui/Card";
-import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
-import { useLeadStore } from "../store/leadStore";
-import { Check, Info, Cpu, Droplet, Sparkles, Waves, Wind } from "lucide-react";
+import { BUSINESS_INFO, WHATSAPP_MESSAGES } from "../lib/constants";
+import { getWhatsAppLink } from "../lib/whatsapp";
+import { WhatsAppIcon } from "../components/ui/WhatsAppIcon";
+import { Check, Cpu, Droplet, Phone, Sparkles, Waves, Wind } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Products() {
-  const { openLeadModal } = useLeadStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get("category");
 
@@ -177,24 +177,23 @@ export default function Products() {
                     </div>
 
                     {/* Actions */}
-                    <div className="p-6 border-t border-brandBorder bg-surface-1 flex items-center justify-between gap-3">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1"
-                        onClick={() => openLeadModal(product.name, `Products Page Specs: ${product.name}`)}
+                    <div className="p-6 border-t border-brandBorder bg-surface-1 flex items-center gap-2">
+                      <a
+                        href={getWhatsAppLink(WHATSAPP_MESSAGES.product(product.name))}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-[#25D366] text-xs font-bold text-white hover:bg-[#1da851] shadow-sm"
                       >
-                        <Info className="h-4 w-4 mr-1.5" />
-                        <span>Specs</span>
-                      </Button>
-                      <Button
-                        variant="cta"
-                        size="sm"
-                        className="flex-1"
-                        onClick={() => openLeadModal(product.name, `Products Page Get Quote: ${product.name}`)}
+                        <WhatsAppIcon size={14} />
+                        WhatsApp
+                      </a>
+                      <a
+                        href={`tel:${BUSINESS_INFO.phoneRaw}`}
+                        className="flex-1 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-brand-primary text-xs font-bold text-white hover:bg-brand-primary/90 shadow-sm"
                       >
-                        <span>Get Quote</span>
-                      </Button>
+                        <Phone className="h-3.5 w-3.5" />
+                        Call Now
+                      </a>
                     </div>
                   </Card>
                 </motion.div>

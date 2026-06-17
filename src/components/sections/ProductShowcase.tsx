@@ -3,14 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { products } from "../../data/products";
 import { categories } from "../../data/categories";
 import { Card } from "../ui/Card";
-import { Button } from "../ui/Button";
 import { Badge } from "../ui/Badge";
-import { useLeadStore } from "../../store/leadStore";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
-import { Check, Info, Cpu, Droplet, Sparkles, Waves, Wind } from "lucide-react";
+import { BUSINESS_INFO, WHATSAPP_MESSAGES } from "../../lib/constants";
+import { getWhatsAppLink } from "../../lib/whatsapp";
+import { CATEGORY_IMAGES } from "../../lib/images";
+import { WhatsAppIcon } from "../ui/WhatsAppIcon";
+import { Check, Cpu, Droplet, Phone, Sparkles, Waves, Wind } from "lucide-react";
 
 export function ProductShowcase() {
-  const { openLeadModal } = useLeadStore();
   const { viewport, containerVariants } = useScrollReveal();
   const [activeTab, setActiveTab] = React.useState<string>("all");
 
@@ -69,6 +70,21 @@ export function ProductShowcase() {
             </button>
           ))}
         </div>
+
+        {activeTab !== "all" && CATEGORY_IMAGES[activeTab] && (
+          <div className="mb-10 overflow-hidden rounded-2xl border border-brandBorder shadow-sm">
+            <img
+              src={CATEGORY_IMAGES[activeTab]}
+              alt={`${categories.find((c) => c.id === activeTab)?.title ?? "Product"} showcase — Hanamkonda Water Service`}
+              width={1200}
+              height={400}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-40 sm:h-52 object-cover object-center"
+              sizes="100vw"
+            />
+          </div>
+        )}
 
         {/* Products Grid */}
         <motion.div
@@ -136,24 +152,23 @@ export function ProductShowcase() {
                   </div>
 
                   {/* Actions */}
-                  <div className="p-6 border-t border-brandBorder bg-surface-1 flex items-center justify-between gap-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => openLeadModal(product.name, `Product Showcase Specs: ${product.name}`)}
+                  <div className="p-6 border-t border-brandBorder bg-surface-1 flex items-center gap-2">
+                    <a
+                      href={getWhatsAppLink(WHATSAPP_MESSAGES.product(product.name))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-[#25D366] text-xs font-bold text-white hover:bg-[#1da851] shadow-sm"
                     >
-                      <Info className="h-4 w-4 mr-1.5" />
-                      <span>Specs</span>
-                    </Button>
-                    <Button
-                      variant="cta"
-                      size="sm"
-                      className="flex-1"
-                      onClick={() => openLeadModal(product.name, `Product Showcase Get Quote: ${product.name}`)}
+                      <WhatsAppIcon size={14} />
+                      WhatsApp
+                    </a>
+                    <a
+                      href={`tel:${BUSINESS_INFO.phoneRaw}`}
+                      className="flex-1 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-brand-primary text-xs font-bold text-white hover:bg-brand-primary/90 shadow-sm"
                     >
-                      <span>Get Quote</span>
-                    </Button>
+                      <Phone className="h-3.5 w-3.5" />
+                      Call Now
+                    </a>
                   </div>
                 </Card>
               </motion.div>

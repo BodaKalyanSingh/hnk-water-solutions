@@ -1,24 +1,22 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
 import { FloatingActions } from "./components/layout/FloatingActions";
 import { PageWrapper } from "./components/layout/PageWrapper";
-import { LeadModal } from "./components/sections/LeadModal";
 import { ROUTES } from "./lib/constants";
+import { SERVICE_PAGES } from "./data/seo/service-pages";
 
-// Lazy-load every page as requested
 const Home = React.lazy(() => import("./pages/Home"));
 const About = React.lazy(() => import("./pages/About"));
 const Products = React.lazy(() => import("./pages/Products"));
 const Services = React.lazy(() => import("./pages/Services"));
 const Contact = React.lazy(() => import("./pages/Contact"));
-const WaterPurifierSolutions = React.lazy(() => import("./pages/WaterPurifierSolutions"));
-const WaterSoftenerSolutions = React.lazy(() => import("./pages/WaterSoftenerSolutions"));
-const RoboVacuumSolutions = React.lazy(() => import("./pages/RoboVacuumSolutions"));
+const FAQ = React.lazy(() => import("./pages/FAQ"));
+const SeoServicePage = React.lazy(() => import("./pages/SeoServicePage"));
+const LocationPage = React.lazy(() => import("./pages/LocationPage"));
 
-// Loading Skeleton Fallback
 function PageSkeleton() {
   return (
     <div className="pt-28 pb-16 min-h-screen flex flex-col items-center justify-center bg-surface-1">
@@ -42,90 +40,43 @@ export default function App() {
       <Router>
         <div className="flex flex-col min-h-screen">
           <Header />
-          
+
           <div className="flex-grow">
             <Suspense fallback={<PageSkeleton />}>
               <Routes>
-                <Route
-                  path={ROUTES.HOME}
-                  element={
-                    <PageWrapper>
-                      <Home />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.ABOUT}
-                  element={
-                    <PageWrapper>
-                      <About />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.PRODUCTS}
-                  element={
-                    <PageWrapper>
-                      <Products />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.SERVICES}
-                  element={
-                    <PageWrapper>
-                      <Services />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.CONTACT}
-                  element={
-                    <PageWrapper>
-                      <Contact />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.SEO_WATER_PURIFIER}
-                  element={
-                    <PageWrapper>
-                      <WaterPurifierSolutions />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.SEO_WATER_SOFTENER}
-                  element={
-                    <PageWrapper>
-                      <WaterSoftenerSolutions />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path={ROUTES.SEO_ROBO_VACUUM}
-                  element={
-                    <PageWrapper>
-                      <RoboVacuumSolutions />
-                    </PageWrapper>
-                  }
-                />
-                {/* Fallback route */}
-                <Route
-                  path="*"
-                  element={
-                    <PageWrapper>
-                      <Home />
-                    </PageWrapper>
-                  }
-                />
+                <Route path={ROUTES.HOME} element={<PageWrapper><Home /></PageWrapper>} />
+                <Route path={ROUTES.ABOUT} element={<PageWrapper><About /></PageWrapper>} />
+                <Route path={ROUTES.PRODUCTS} element={<PageWrapper><Products /></PageWrapper>} />
+                <Route path={ROUTES.SERVICES} element={<PageWrapper><Services /></PageWrapper>} />
+                <Route path={ROUTES.CONTACT} element={<PageWrapper><Contact /></PageWrapper>} />
+                <Route path={ROUTES.FAQ} element={<PageWrapper><FAQ /></PageWrapper>} />
+
+                {Object.keys(SERVICE_PAGES).map((slug) => (
+                  <Route
+                    key={slug}
+                    path={SERVICE_PAGES[slug].path}
+                    element={
+                      <PageWrapper>
+                        <SeoServicePage slug={slug} />
+                      </PageWrapper>
+                    }
+                  />
+                ))}
+
+                <Route path="/locations/:slug" element={<PageWrapper><LocationPage /></PageWrapper>} />
+
+                {/* Legacy URL redirects */}
+                <Route path="/water-purifier-hanamkonda" element={<Navigate to={ROUTES.WATER_PURIFIER_SALES} replace />} />
+                <Route path="/water-softener-hanamkonda" element={<Navigate to={ROUTES.WATER_SOFTENER_SALES} replace />} />
+                <Route path="/robo-vacuum-hanamkonda" element={<Navigate to={ROUTES.ROBOT_VACUUM_SALES} replace />} />
+
+                <Route path="*" element={<PageWrapper><Home /></PageWrapper>} />
               </Routes>
             </Suspense>
           </div>
 
           <Footer />
           <FloatingActions />
-          <LeadModal />
         </div>
       </Router>
     </HelmetProvider>

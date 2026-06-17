@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://waterpurifiersolutions.in/sitemap.xml
+Sitemap: https://hanamkondawaterservice.com/sitemap.xml
+
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cart/
+Disallow: /checkout/

@@ -3,14 +3,15 @@ import { SEOHead } from "../components/layout/SEOHead";
 import { products } from "../data/products";
 import { faqs } from "../data/faqs";
 import { Card } from "../components/ui/Card";
-import { Button } from "../components/ui/Button";
 import { Accordion } from "../components/ui/Accordion";
 import { ContactSection } from "../components/sections/Contact";
-import { useLeadStore } from "../store/leadStore";
-import { Check, ShowerHead, Waves, Sparkles, ShieldCheck } from "lucide-react";
+import { ServiceCTAs } from "../components/seo/ServiceCTAs";
+import { BUSINESS_INFO, WHATSAPP_MESSAGES } from "../lib/constants";
+import { getWhatsAppLink } from "../lib/whatsapp";
+import { WhatsAppIcon } from "../components/ui/WhatsAppIcon";
+import { Check, ShowerHead, Waves, Sparkles, ShieldCheck, Phone } from "lucide-react";
 
 export default function WaterSoftenerSolutions() {
-  const { openLeadModal } = useLeadStore();
 
   const softenerProducts = products.filter(p => p.categoryId === "water-softeners");
   const softenerFaqs = faqs.filter(f => f.id === "faq-5" || f.id === "faq-8" || f.id === "faq-3");
@@ -45,13 +46,7 @@ export default function WaterSoftenerSolutions() {
               Hard borewell water causes scaling on bathroom fittings, geysers, and results in hair loss. Our automatic resin water softeners filter out hardness minerals at the inlet.
             </p>
             <div className="pt-2">
-              <Button
-                variant="cta"
-                size="lg"
-                onClick={() => openLeadModal("Free Hardness Test", "SEO Softener Page Banner")}
-              >
-                Book Free Hardness Test
-              </Button>
+              <ServiceCTAs onDark />
             </div>
           </div>
         </section>
@@ -105,13 +100,22 @@ export default function WaterSoftenerSolutions() {
                     </ul>
                   </div>
                   <div className="p-6 border-t border-brandBorder bg-surface-1 flex gap-2">
-                    <Button
-                      variant="cta"
-                      className="w-full"
-                      onClick={() => openLeadModal(product.name, `SEO Softener Page: ${product.name}`)}
+                    <a
+                      href={getWhatsAppLink(WHATSAPP_MESSAGES.product(product.name))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-[#25D366] text-xs font-bold text-white hover:bg-[#1da851]"
                     >
-                      Get Quote
-                    </Button>
+                      <WhatsAppIcon size={14} />
+                      WhatsApp
+                    </a>
+                    <a
+                      href={`tel:${BUSINESS_INFO.phoneRaw}`}
+                      className="flex-1 inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-brand-primary text-xs font-bold text-white hover:bg-brand-primary/90"
+                    >
+                      <Phone className="h-3.5 w-3.5" />
+                      Call
+                    </a>
                   </div>
                 </Card>
               ))}

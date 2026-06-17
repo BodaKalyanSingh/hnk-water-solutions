@@ -16,10 +16,10 @@ const buttonVariants = cva(
         link: "text-brand-primary underline-offset-4 hover:underline bg-transparent p-0",
       },
       size: {
-        default: "h-11 px-6 text-sm",
-        sm: "h-9 px-4 text-xs",
-        lg: "h-13 px-8 text-base",
-        icon: "h-11 w-11",
+        default: "h-9 px-4 text-sm",
+        sm: "h-8 px-3 text-xs",
+        lg: "h-10 px-6 text-sm",
+        icon: "h-9 w-9",
       },
     },
     defaultVariants: {
@@ -41,8 +41,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps & HTMLMoti
     return (
       <MotionButton
         ref={ref}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
         className={cn(buttonVariants({ variant, size, className }))}
         {...props}
       />

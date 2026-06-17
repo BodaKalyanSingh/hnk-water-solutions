@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "../ui/Card";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
-import { useLeadStore } from "../../store/leadStore";
+import { ServiceCTAs } from "../seo/ServiceCTAs";
+import { WHATSAPP_MESSAGES } from "../../lib/constants";
 import { Droplet, ArrowRight, ArrowLeft, CheckCircle, Home, Layers, Users } from "lucide-react";
 
 export function WaterAssessment() {
-  const { openLeadModal } = useLeadStore();
   const [step, setStep] = React.useState<number>(1);
   const [waterSource, setWaterSource] = React.useState<"municipal" | "borewell" | "tanker" | "">("");
   const [familySize, setFamilySize] = React.useState<"1-2" | "3-5" | "6+" | "">("");
@@ -67,12 +67,10 @@ export function WaterAssessment() {
 
   const recommendation = getRecommendation();
 
-  const handleConsultationCTA = () => {
-    openLeadModal(
-      `Water Assessment Recommendation: ${recommendation.title}`,
-      `Water Assessment Wizard: Source=${waterSource}, Family=${familySize}, Loc=${location}`
-    );
-  };
+  const assessmentWhatsApp = WHATSAPP_MESSAGES.assessment(
+    recommendation.sourceLabel,
+    recommendation.title
+  );
 
   const slideVariants = {
     initial: { opacity: 0, x: 20 },
@@ -302,14 +300,8 @@ export function WaterAssessment() {
                     </p>
                   </div>
 
-                  <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
-                    <Button
-                      variant="cta"
-                      onClick={handleConsultationCTA}
-                      className="flex items-center justify-center"
-                    >
-                      Get Free Expert Callback
-                    </Button>
+                  <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                    <ServiceCTAs whatsappMessage={assessmentWhatsApp} />
                     <Button
                       variant="outline"
                       onClick={resetForm}
