@@ -5,11 +5,11 @@ export const GOOGLE_SITE_VERIFICATION = "your-google-verification-code";
 
 export const BUSINESS_INFO = {
   name: "Hanamkonda Water Service",
-  phone: "+91 63001 40176",
-  phoneRaw: "+916300140176",
-  whatsapp: "+91 63001 40176",
-  whatsappRaw: "916300140176",
-  email: "info@hanamkondawaterservice.com",
+  phone: "+91 81064 97719",
+  phoneRaw: "+918106497719",
+  whatsapp: "+91 81064 97719",
+  whatsappRaw: "918106497719",
+  email: "dharamsothutnayak@gmail.com",
   dealerName: "Eureka Forbes Ltd",
   eurekaForbesPartnerLabel: "Eureka Forbes Partner",
   eurekaForbesBlurb:

@@ -24,7 +24,7 @@ Use this checklist when setting up or optimizing your Google Business Profile.
 
 ### 4. Business Description (750 characters)
 
-Hanamkonda Water Service is your trusted local partner for water purification, water softening, and smart home cleaning in Hanamkonda, Warangal, and Kazipet. We sell, install, repair, and maintain RO, UV, and UF water purifiers for homes and offices. Our water softener solutions treat hard borewell water that causes scale buildup on taps, geysers, and washing machines. We also provide robot vacuum cleaner sales, setup, and repair for hassle-free floor cleaning. With certified technicians, genuine spare parts, same-day repair service, and transparent pricing, we have served 500+ families since 2016. Visit our Shanti Nagar, Hunter Road office or book a free home demo via WhatsApp. Call +91 63001 40176 for water purifier repair, softener installation, hard water treatment, or robot vacuum service in Hanamkonda, Warangal, and Kazipet.
+Hanamkonda Water Service is your trusted local partner for water purification, water softening, and smart home cleaning in Hanamkonda, Warangal, and Kazipet. We sell, install, repair, and maintain RO, UV, and UF water purifiers for homes and offices. Our water softener solutions treat hard borewell water that causes scale buildup on taps, geysers, and washing machines. We also provide robot vacuum cleaner sales, setup, and repair for hassle-free floor cleaning. With certified technicians, genuine spare parts, same-day repair service, and transparent pricing, we have served 500+ families since 2016. Visit our Shanti Nagar, Hunter Road office or book a free home demo via WhatsApp. Call +91 81064 97719 for water purifier repair, softener installation, hard water treatment, or robot vacuum service in Hanamkonda, Warangal, and Kazipet.
 
 ---
 
@@ -63,7 +63,7 @@ Upload these photo types:
 
 ### 7. Messaging
 - [ ] Enable Google Business messaging
-- [ ] Link WhatsApp: +91 63001 40176
+- [ ] Link WhatsApp: +91 81064 97719
 - [ ] Set auto-reply: "Thank you for contacting Hanamkonda Water Service. We will respond within 30 minutes during business hours (Mon–Sat, 9 AM – 7 PM)."
 
 ---
@@ -101,7 +101,7 @@ Post one update per week. Rotate between:
 
 ### Additional Profile Fields
 - **Website:** https://hanamkondawaterservice.com
-- **Phone:** +91 63001 40176
+- **Phone:** +91 81064 97719
 - **Address:** Eureka Forbes Ltd, HNo: 1-7-780 Shanti Nagar, Hunter Rd, beside Govt School Line Adalth Center, Hanamkonda, Telangana 506001
 - **Service Area:** Hanamkonda, Warangal, Kazipet
 - **Attributes:** Identifies as women-led (if applicable), Online appointments, Onsite services
